@@ -1,0 +1,29 @@
+{
+  "name": "aliasr",
+  "version": "0.0.1",
+  "description": "Create command line aliases",
+  "main": "index.js",
+  "bin": {
+    "alias": "bin/aliasr.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/..."
+  },
+  "keywords": [
+    "cli",
+    "shortcut",
+    "utility",
+    "alias",
+    "command"
+  ],
+  "author": "Alex Clark",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/.../issues"
+  },
+  "homepage": "https://github.com/...#readme",
+  "devDependencies": {
+    
+  }
+}
