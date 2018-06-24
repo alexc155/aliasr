@@ -13,6 +13,9 @@
   "files": [
     "bin"
   ],
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
   "keywords": [
     "cli",
     "shortcut",
@@ -26,6 +29,9 @@
     "url": "https://github.com/alexc155/aliasr/issues"
   },
   "homepage": "https://github.com/alexc155/aliasr",
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  },
   "readme": "./readme.md"
 }
