@@ -1,6 +1,6 @@
 {
   "name": "aliasr",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Create command line aliases",
   "main": "index.js",
   "bin": {
@@ -23,8 +23,8 @@
   "author": "Alex Clark",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/.../issues"
+    "url": "https://github.com/alexc155/aliasr/issues"
   },
-  "homepage": "https://github.com/...#readme",
+  "homepage": "https://github.com/alexc155/aliasr",
   "devDependencies": {}
 }

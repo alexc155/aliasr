@@ -2,11 +2,11 @@
 
 Create permanent command-line shortcuts &amp; aliases
 
-aliasr persists aliases between sessions so you don't have to set them up each time.
+aliasr is a Node script that persists aliases between sessions so you don't have to set them up each time.
 
-## ToDo
+## Installation
 
-- Packaging
+    $ npm i -g aliasr
 
 ## Available commands
 
@@ -21,6 +21,18 @@ aliasr persists aliases between sessions so you don't have to set them up each t
 ## Example usage
 
     $ aliasr add hi echo Hello World!
+
+## What aliases can I add?
+
+How about some of the following?
+
+    aliasr agi sudo apt-get install
+    aliasr ll ls -Alh
+    aliasr gp git pull
+    aliasr cw cd c:\work\
+    aliasr h history
+    aliasr hg history | grep
+    aliasr ns npm run start
 
 ## Acknowledgements
 
