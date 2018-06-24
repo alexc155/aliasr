@@ -8,7 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/..."
+    "url": "git@github.com:alexc155/aliasr.git"
+  },
+  "engines": {
+    "node": ">=8"
   },
   "keywords": [
     "cli",
@@ -23,7 +26,5 @@
     "url": "https://github.com/.../issues"
   },
   "homepage": "https://github.com/...#readme",
-  "devDependencies": {
-    
-  }
+  "devDependencies": {}
 }

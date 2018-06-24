@@ -6,7 +6,6 @@ aliasr persists aliases between sessions so you don't have to set them up each t
 
 ## ToDo
 
-- Info about common commands
 - Packaging
 
 ## Available commands
@@ -16,7 +15,7 @@ aliasr persists aliases between sessions so you don't have to set them up each t
     update <ALIAS_NAME> <COMMAND>
     list
     delete-backups
-    add-standards
+    add-standards (Adds a few common commands)
     help
 
 ## Example usage

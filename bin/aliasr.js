@@ -472,7 +472,8 @@ function addStandards() {
 
 function showHelp() {
   console.log(`
-  aliasr persists aliases between sessions so you don't have to set them up each time.
+  aliasr persists aliases between sessions so you 
+  don't have to set them up each time.
 
   Available commands:
     add <ALIAS_NAME> <COMMAND>
@@ -487,7 +488,9 @@ function showHelp() {
     $ aliasr add hi echo Hello World!
 
   Notes:
-    add-standards adds the following useful aliases:`);
+    * delete-backups removes any backup files that 
+      this script makes as part of adding new aliases
+    * add-standards adds the following useful aliases:`);
 
   const plaformSpecificStandards = _buildPlatformSpecificStandards();
 
