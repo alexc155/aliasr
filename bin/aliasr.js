@@ -1,18 +1,19 @@
 #! /usr/bin/env node
 
-import {
+const {
   existsSync,
   mkdirSync,
   readdirSync,
   readFileSync,
   writeFileSync,
   unlinkSync
-} from "fs";
-import { EOL, platform } from "os";
-import { execSync } from "child_process";
+} = require("fs");
+const { EOL, platform } = require("os");
+const { execSync } = require("child_process");
 
 const winAliasDir = "C:\\aliasr-aliases";
 const unixAliasLocations = ["~/.bashrc", "~/.bash_aliases", "/etc/bash.bashrc"];
+const macAliasLocations = ["~/.bash_profile"];
 
 const standards = [
   {
@@ -129,9 +130,13 @@ function _runUnixTest() {
 
   addOrUpdateAlias("aliasr" + seed, "echo Hello World!", true);
 
-  let contents = execSync("cat ~/.bash_aliases", {
-    encoding: "utf8"
-  });
+  let contents = "";
+
+  if (platform() === "darwin") {
+    contents = execSync("cat ~/.bash_profile", { encoding: "utf8" });
+  } else {
+    contents = execSync("cat ~/.bash_aliases", { encoding: "utf8" });
+  }
 
   if (contents.indexOf("aliasr" + seed + "='echo Hello World!'") >= 0) {
     console.log("Alias successfully added.");
@@ -142,9 +147,11 @@ function _runUnixTest() {
 
   removeAlias("aliasr" + seed, true);
 
-  contents = execSync("cat ~/.bash_aliases", {
-    encoding: "utf8"
-  });
+  if (platform() === "darwin") {
+    contents = execSync("cat ~/.bash_profile", { encoding: "utf8" });
+  } else {
+    contents = execSync("cat ~/.bash_aliases", { encoding: "utf8" });
+  }
 
   if (contents.indexOf("aliasr" + seed + "='echo Hello World!'") < 0) {
     console.log("Alias successfully removed.");
@@ -192,7 +199,12 @@ function _runWindowsTest() {
 }
 
 function _removeUnixAlias(name, silent) {
-  for (aliasLocation of unixAliasLocations) {
+  let aliasLocations = unixAliasLocations;
+  if (platform() === "darwin") {
+    aliasLocations = macAliasLocations;
+  }
+
+  for (aliasLocation of aliasLocations) {
     const execResponse = execSync(
       "if [ -f " + aliasLocation + " ]; then echo 1; fi"
     );
@@ -275,6 +287,8 @@ function _removeWindowsAlias(name) {
 function _addUnixAlias(name, value, silent) {
   execSync("if [ ! -f ~/.bash_aliases ]; then touch ~/.bash_aliases; fi");
 
+  execSync('echo "\\n >> ~/.bash_aliases"');
+
   execSync('echo "alias ' + name + "='" + value + "'\" >> ~/.bash_aliases");
 
   if (silent === false) {
@@ -283,6 +297,19 @@ function _addUnixAlias(name, value, silent) {
     );
 
     console.log(". ~/.bash_aliases");
+  }
+}
+
+function _addMacAlias(name, value, silent) {
+  execSync('echo "\\n >> ~/.bash_profile"');
+  execSync('echo "alias ' + name + "='" + value + "'\" >> ~/.bash_profile");
+
+  if (silent === false) {
+    console.log(
+      "Restart your terminal window or run the following (including the leading dot)"
+    );
+
+    console.log(". ~/.bash_profile");
   }
 }
 
@@ -300,7 +327,7 @@ function _buildPlatformSpecificStandards() {
   for (standard of standards) {
     if (platform() === "win32" && standard.platforms.includes("windows")) {
       plaformSpecificStandards.push(standard);
-    } else if (standard.platforms.includes["unix"]) {
+    } else if (standard.platforms.includes("unix")) {
       plaformSpecificStandards.push(standard);
     }
   }
@@ -321,6 +348,8 @@ function addOrUpdateAlias(name, value, silent) {
 
   if (platform() === "win32") {
     _addWindowsAlias(name, value);
+  } else if (platform() === "darwin") {
+    _addMacAlias(name, value, silent);
   } else {
     _addUnixAlias(name, value, silent);
   }
@@ -348,7 +377,11 @@ function listAliases() {
   if (platform() === "win32") {
     results = _addToAliasesListWindows();
   } else {
-    for (aliasLocation of unixAliasLocations) {
+    let aliasLocations = unixAliasLocations;
+    if (platform() === "darwin") {
+      aliasLocations = macAliasLocations;
+    }
+    for (aliasLocation of aliasLocations) {
       results += _addToAliasesListUnix(aliasLocation);
     }
   }
@@ -368,7 +401,11 @@ function deleteBackups() {
     console.log("Nothing to delete on Windows platform.");
   } else {
     console.log("Removing all backups...");
-    for (aliasLocation of unixAliasLocations) {
+    let aliasLocations = unixAliasLocations;
+    if (platform() === "darwin") {
+      aliasLocations = macAliasLocations;
+    }
+    for (aliasLocation of aliasLocations) {
       execSync("sudo rm -f " + aliasLocation + ".backup_* || true");
     }
   }
@@ -387,8 +424,11 @@ function addStandards() {
     console.log(
       "Restart your terminal window or run the following (including the leading dot)"
     );
-
-    console.log(". ~/.bash_aliases");
+    if (platform() === "darwin") {
+      console.log(". ~/.bash_profile");
+    } else {
+      console.log(". ~/.bash_aliases");
+    }
   }
 }
 
