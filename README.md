@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/alexc155/aliasr.svg?branch=master)](https://travis-ci.org/alexc155/aliasr)
+
 # aliasr
 
 Create permanent command-line shortcuts &amp; aliases
