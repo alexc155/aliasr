@@ -7,7 +7,6 @@ aliasr persists aliases between sessions so you don't have to set them up each t
 ## ToDo
 
 - Info about common commands
-- Input validation
 - Packaging
 
 ## Available commands

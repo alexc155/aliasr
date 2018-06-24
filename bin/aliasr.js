@@ -85,7 +85,7 @@ function _setupWinAliasDir() {
   return setupNeeded;
 }
 
-function _addToAliasesListWindows() {
+function _addToWindowsAliasesList() {
   if (!_setupWinAliasDir()) {
     let winAliasList = "";
     for (file of readdirSync(winAliasDir)) {
@@ -104,7 +104,7 @@ function _addToAliasesListWindows() {
   return "";
 }
 
-function _addToAliasesListUnix(pathToConfigFile) {
+function _addToUnixOrMacAliasesList(pathToConfigFile) {
   const execResponse = execSync(
     "if [ -f " +
       pathToConfigFile +
@@ -122,7 +122,7 @@ function _addToAliasesListUnix(pathToConfigFile) {
   return "";
 }
 
-function _runUnixTest() {
+function _runUnixOrMacTest() {
   console.log("Testing...");
 
   const seed = new Date().getTime();
@@ -198,7 +198,7 @@ function _runWindowsTest() {
   console.log("Tests complete.");
 }
 
-function _removeUnixAlias(name, silent) {
+function _removeUnixOrMacAlias(name, silent) {
   let aliasLocations = unixAliasLocations;
   if (platform() === "darwin") {
     aliasLocations = macAliasLocations;
@@ -327,11 +327,27 @@ function _buildPlatformSpecificStandards() {
   for (standard of standards) {
     if (platform() === "win32" && standard.platforms.includes("windows")) {
       plaformSpecificStandards.push(standard);
-    } else if (standard.platforms.includes("unix")) {
+    } else if (platform() !== "win32" && standard.platforms.includes("unix")) {
       plaformSpecificStandards.push(standard);
     }
   }
   return plaformSpecificStandards;
+}
+
+function _validateName(name) {
+  for (const letter of name.split("")) {
+    if (/[a-z0-9A-Z_\-@£~]/.test(letter) === false) {
+      console.log("");
+
+      console.log(
+        `The alias name '${name}' is invalid. You can only use letters, numbers, or the following characters:`
+      );
+      console.log("_ - @ £ ~");
+
+      return false;
+    }
+  }
+  return true;
 }
 
 /**
@@ -340,6 +356,10 @@ function _buildPlatformSpecificStandards() {
  * @param bool silent - log output or not
  */
 function addOrUpdateAlias(name, value, silent) {
+  if (!_validateName(name)) {
+    return;
+  }
+
   if (silent === false) {
     console.log("Adding...");
   }
@@ -360,6 +380,24 @@ function addOrUpdateAlias(name, value, silent) {
  * @param bool silent - log output or not
  */
 function removeAlias(name, silent) {
+  if (!_validateName(name)) {
+    if (platform() === "win32") {
+      console.log(
+        "To manually remove aliases, delete them from the folder " + winAliasDir
+      );
+    } else if (platform() === "darwin") {
+      console.log(
+        "To manually remove aliases, delete them from ~/.bash_profile"
+      );
+    } else {
+      console.log(
+        "To manually remove aliases, delete them from ~/.bash_aliases"
+      );
+    }
+
+    return;
+  }
+
   if (silent === false) {
     console.log("Removing...");
   }
@@ -367,7 +405,7 @@ function removeAlias(name, silent) {
   if (platform() === "win32") {
     _removeWindowsAlias(name);
   } else {
-    _removeUnixAlias(name, silent);
+    _removeUnixOrMacAlias(name, silent);
   }
 }
 
@@ -375,14 +413,14 @@ function listAliases() {
   let results = "";
 
   if (platform() === "win32") {
-    results = _addToAliasesListWindows();
+    results = _addToWindowsAliasesList();
   } else {
     let aliasLocations = unixAliasLocations;
     if (platform() === "darwin") {
       aliasLocations = macAliasLocations;
     }
     for (aliasLocation of aliasLocations) {
-      results += _addToAliasesListUnix(aliasLocation);
+      results += _addToUnixOrMacAliasesList(aliasLocation);
     }
   }
 
@@ -474,7 +512,7 @@ function main() {
   switch (action) {
     case "add":
     case "update":
-      addOrUpdateAlias(args[0], args.slice(1).join(" "));
+      addOrUpdateAlias(args[0], args.slice(1).join(" "), false);
       break;
     case "remove":
       removeAlias(args[0], false);
@@ -486,7 +524,7 @@ function main() {
       if (platform() === "win32") {
         _runWindowsTest();
       } else {
-        _runUnixTest();
+        _runUnixOrMacTest();
       }
       break;
     case "delete-backups":
