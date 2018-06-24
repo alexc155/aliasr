@@ -2,17 +2,17 @@
   "name": "aliasr",
   "version": "0.0.2",
   "description": "Create command line aliases",
-  "main": "index.js",
+  "main": "./bin/aliasr.js",
   "bin": {
-    "alias": "bin/aliasr.js"
+    "aliasr": "bin/aliasr.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:alexc155/aliasr.git"
+    "url": "git+https://github.com/alexc155/aliasr.git"
   },
-  "engines": {
-    "node": ">=8"
-  },
+  "files": [
+    "bin"
+  ],
   "keywords": [
     "cli",
     "shortcut",
@@ -26,5 +26,6 @@
     "url": "https://github.com/alexc155/aliasr/issues"
   },
   "homepage": "https://github.com/alexc155/aliasr",
-  "devDependencies": {}
+  "devDependencies": {},
+  "readme": "./readme.md"
 }
