@@ -354,7 +354,6 @@ call :GETREGVAL "%keySystem%" path listPath
 call :CLEAN_PATH listPath "%listPath%"
 set "listPath=%listPath%%userPath%"
 :LIST_OUTPUT
-echo %heading%
 call :LIST_PATH "%listPath%" "%xpand%" "%order%" "%validate%"
 exit /b
 
@@ -824,13 +823,11 @@ REM ****************************************************************************
 setlocal enabledelayedexpansion
 
 set "mxpand=/"
-set "morder=/"
 set "mvalidate=/"
 :ARGUMENTS_LIST_PATH
 if "%~1"==""  ( goto START_LIST)
     if "%~1" == "/" (goto SHIFT_LIST )
     if "%~1" == "/x" (set "mxpand=/x" & goto SHIFT_LIST )
-    if "%~1" == "/r" (set "morder=/r" & goto SHIFT_LIST )
     if "%~1" == "/v" (set "mvalidate=/v" & goto SHIFT_LIST )
     :: else parameter a path if ends ?
     set "isPath=%~1"
@@ -862,8 +859,9 @@ if not exist "%xpandPath%" set "aPath=%aPath% does not exist"
 if "%mxpand%" equ "/x" call echo %aPath% >> %Temp%\pathlist.txt
 if "%mxpand%" neq "/x" echo %aPath% >>  %Temp%\pathlist.txt
 if "%inputPath%" neq "" goto LOOP_LIST
-call sort %morder% <  %Temp%\pathList.txt
+call sort <  %Temp%\pathList.txt
 del  %Temp%\pathlist.txt
+
 endlocal
 exit /b
 
