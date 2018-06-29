@@ -11,6 +11,9 @@ const {
 const { EOL, platform } = require('os');
 const { execSync } = require('child_process');
 
+const updateNotifier = require('update-notifier');
+const pkg = require('../package.json');
+
 const winAliasDir = 'C:\\aliasr-aliases';
 const unixAliasLocations = ['~/.bashrc', '~/.bash_aliases', '/etc/bash.bashrc'];
 const macAliasLocations = ['~/.bash_profile'];
@@ -505,6 +508,13 @@ function showHelp() {
 }
 
 function main() {
+  updateNotifier({
+    pkg,
+    updateCheckInterval: 0,
+  }).notify({
+    isGlobal: true,
+  });
+
   const action = process.argv[2];
   const args = process.argv.slice(3);
   switch (action) {
