@@ -1,6 +1,6 @@
 {
   "name": "aliasr",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Create command line aliases",
   "main": "./bin/aliasr.js",
   "bin": {
