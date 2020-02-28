@@ -1,6 +1,6 @@
 {
   "name": "aliasr",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Create command line aliases",
   "main": "./bin/aliasr.js",
   "bin": {
@@ -14,7 +14,9 @@
     "bin"
   ],
   "scripts": {
-    "test": "mocha --reporter spec"
+    "test": "mocha $(find . -name '*.spec.js' ! -ipath '*node_modules*') --reporter spec",
+    "test:watch": "npm install && mocha $(find . -name '*.spec.js' ! -ipath '*node_modules*') --reporter min --watch",
+    "cover": "nyc --reporter=lcov --reporter=text npm run test"
   },
   "keywords": [
     "cli",
@@ -30,11 +32,13 @@
   },
   "homepage": "https://github.com/alexc155/aliasr",
   "devDependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^5.2.0"
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.9",
+    "mocha": "^7.1.0",
+    "nyc": "^15.0.0"
   },
   "dependencies": {
-    "update-notifier": "^2.5.0"
+    "update-notifier": "^4.1.0"
   },
   "readme": "./readme.md"
 }

@@ -1,4 +1,9 @@
+[![NPM Version](https://img.shields.io/npm/v/aliasr.svg?style=flat-square)](https://www.npmjs.com/package/aliasr)
+[![NPM Downloads](https://img.shields.io/npm/dm/aliasr.svg?style=flat-square)](https://www.npmjs.com/package/aliasr)
 [![Build Status](https://travis-ci.org/alexc155/aliasr.svg?branch=master)](https://travis-ci.org/alexc155/aliasr)
+[![Coverage Status](https://coveralls.io/repos/github/alexc155/aliasr/badge.svg?branch=master)](https://coveralls.io/github/alexc155/aliasr?branch=master)
+[![dependencies Status](https://david-dm.org/alexc155/aliasr/status.svg)](https://david-dm.org/alexc155/aliasr)
+[![devDependencies Status](https://david-dm.org/alexc155/aliasr/dev-status.svg)](https://david-dm.org/alexc155/aliasr?type=dev)
 
 # aliasr
 
